@@ -307,12 +307,20 @@
 (add-to-list 'auto-mode-alist '("\\.markdown\\'" . markdown-mode))
 (add-to-list 'auto-mode-alist '("\\.md\\'" . markdown-mode))
 
-(defun my-insert-checkmark ()
-  (interactive)
-  (insert "✓ "))
+(defun my-jekyll-put-github (url)
+  "jekyll github tag generator"
+  (interactive "sURL: ")
+  (insert (concat "{% github "
+                    "{"
+                    " \"url\":     "  "\"" url "\","
+		    " \"start\":   "             ","
+		    " \"end\":     "             ","
+		    " \"lang\": \"\" "
+                    "}"
+                  "%}")))
 
 (defun my-jekyll-put-highlight (lang)
-  "definition helper" 
+  "jekyll highlight tag generator"
   (interactive "sLanguage Name: ")
   (insert (concat "{% highlight " lang " %}\n\n{% endhighlight %}"))
   (previous-line))
@@ -328,7 +336,7 @@
 (defun my-jekyll-open-local ()
   (interactive)
   (let* ((current-lineno (line-number-at-pos))
-	 (jekyll-local-root "/Users/hiogawa/repositories/github_public/myblog")
+	 (jekyll-local-root "/Users/hiogawa/repositories/github_public/myblog_jekyll")
 	 (jekyll-host       "http://localhost:4000")
 	 (json-file (concat jekyll-local-root
 			    "/_sync/"
@@ -350,7 +358,7 @@
 
 (add-hook 'markdown-mode-hook 
 	  (lambda ()
-	    (local-set-key (kbd "C-c C-c") 'my-insert-checkmark)
+	    (local-set-key (kbd "C-c C-g") 'my-jekyll-put-github)
 	    (local-set-key (kbd "C-c C-l") 'my-jekyll-open-local)
 	    (local-set-key (kbd "C-c C-h") 'my-jekyll-put-highlight)))
 
