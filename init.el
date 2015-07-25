@@ -1,0 +1,1 @@
+/Users/hiogawa/Dropbox/mydoc/programs/emacs/init_mac_os.el
